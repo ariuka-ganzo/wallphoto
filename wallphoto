@@ -1,0 +1,108 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Edge Detection & Image Gradients"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "import cv2\n",
+    "import numpy as np\n",
+    "\n",
+    "image = cv2.imread('images/a1.jpg',0)\n",
+    "\n",
+    "height, width = image.shape\n",
+    "\n",
+    "# Extract Sobel Edges\n",
+    "sobel_x = cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=5)\n",
+    "sobel_y = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=5)\n",
+    "\n",
+    "cv2.imshow('Original', image)\n",
+    "cv2.waitKey(0)\n",
+    "cv2.imshow('Sobel X', sobel_x)\n",
+    "cv2.imwrite('./output/sobel_x.jpg', sobel_x)\n",
+    "\n",
+    "cv2.waitKey(0)\n",
+    "cv2.imshow('Sobel Y', sobel_y)\n",
+    "cv2.imwrite('./output/sobel_y.jpg', sobel_y)\n",
+    "\n",
+    "cv2.waitKey(0)\n",
+    "\n",
+    "sobel_OR = cv2.bitwise_or(sobel_x, sobel_y)\n",
+    "cv2.imshow('sobel_OR', sobel_OR)\n",
+    "cv2.imwrite('./output/sobel_or.jpg', sobel_OR)\n",
+    "\n",
+    "cv2.waitKey(0)\n",
+    "\n",
+    "laplacian = cv2.Laplacian(image, cv2.CV_64F)\n",
+    "cv2.imshow('Laplacian', laplacian)\n",
+    "cv2.imwrite('./output/laplacian.jpg', laplacian)\n",
+    "cv2.waitKey(0)\n",
+    "\n",
+    "\n",
+    "#side by side 2 image\n",
+    "\n",
+    "\n",
+    "canny = cv2.Canny(image, 50, 120)\n",
+    "cv2.imshow('Canny', canny)\n",
+    "cv2.waitKey(0)\n",
+    "\n",
+    "res = np.hstack((image,sobel_x,sobel_y,sobel_OR,laplacian, canny))\n",
+    "cv2.imshow('all', res)\n",
+    "cv2.imwrite('./output/all.jpg', res)\n",
+    "\n",
+    "cv2.waitKey(0)\n",
+    "\n",
+    "cv2.destroyAllWindows()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 2",
+   "language": "python",
+   "name": "python2"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 2
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython2",
+   "version": "2.7.13"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 1
+}
